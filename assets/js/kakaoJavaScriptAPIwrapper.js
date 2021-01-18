@@ -16,14 +16,33 @@ function login() {
         redirectUri: window.location.origin + '/' + this.REDIRECT_URI
     });
 }
+function isLogin() {
+    if (!Kakao.Auth.getAccessToken()) {
+        console.log('Not logged in.');
+        $("#login").show();
+        $("#logout").hide();
+        return;
+    }
+    else {
+        $("#login").hide();
+        $("#logout").show();
+        //★ 추가 할 것 : 로그인 성공 후 처리 
+        //window.location.href = "#profile"; //profile로 이동
+        profile(); //프로필 조회
+        //channel
+        btn_channel_added();
+        btn_channel_chat();
+        //story
+        btn_story_share('https://developers.kakao.com', '카카오 개발자 사이트로 놀러오세요! #개발자 #카카오 :)');
+        btn_story_flow('kakao');
+    }
+}
 
 function loginPopUp() {
     Kakao.Auth.login({
         success: function (authObj) {
             console.log(authObj);
-            //★ 추가 할 것 : 로그인 성공 후 처리 
-            window.location.href = "#profile"; //profile로 이동
-            profile(); //프로필 조회
+            isLogin();
         },
         fail: function (err) {
             console.log(err)
@@ -61,8 +80,8 @@ function profile() {
         url: '/v2/user/me',
         success: function (response) {
             console.log(response);
-            
-            
+
+
             document.getElementById("nickname").innerText = response.kakao_account.profile.nickname;
             document.getElementById("profile_image").src = response.properties.profile_image;
 
@@ -324,7 +343,7 @@ function storyAppShare(url, text) {
 
 function btn_story_flow(id) {
     Kakao.Story.createFollowButton({
-        container: '#btn-tory-flow',
+        container: '#btn-story-flow',
         id: id
     });
 }
