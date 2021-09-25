@@ -1,6 +1,7 @@
 <?php
 class Route {  
     public static function init($reqUri){
+        echo Route::isIpAdd();
         if(Route::isAPI($reqUri)){
             Route::routeApi($reqUri);
         }
@@ -8,7 +9,7 @@ class Route {
             Route::routeIpadd();
         }        
         else{
-            //Route::routeReact();
+            Route::routeReact();
         }
     }
 
@@ -19,7 +20,6 @@ class Route {
 
     private static function isIpAdd(){
         $host = $_SERVER['HTTP_HOST'];
-        echo $host;
         if(strpos($host, "ipadd.kr")) return true;
         return false;
     }         
