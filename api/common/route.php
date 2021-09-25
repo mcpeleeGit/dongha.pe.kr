@@ -20,7 +20,6 @@ class Route {
 
     private static function isIpAdd(){
         $host = $_SERVER['HTTP_HOST'];
-        echo strpos($host, "ttt");
         if(strpos($host, "ipadd.kr")>-1) return true;
         return false;
     }         
@@ -64,7 +63,7 @@ class Route {
     }    
     private static function routeIpadd(){
 
-        require('/ipadd/index.php');
+        require('ipadd/index.php');
     }       
 }
 ?>
