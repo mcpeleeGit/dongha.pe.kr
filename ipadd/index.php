@@ -26,7 +26,28 @@
 
     </script>
 </head>
+<?php
+function getRealClientIp() {
 
+    $ipaddress = '';
+    if ($_SERVER['HTTP_CLIENT_IP']) {
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    } else if($_SERVER['HTTP_X_FORWARDED_FOR']) {
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else if($_SERVER['HTTP_X_FORWARDED']) {
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    } else if($_SERVER['HTTP_FORWARDED_FOR']) {
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    } else if($_SERVER['HTTP_FORWARDED']) {
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    } else if($_SERVER['REMOTE_ADDR']) {
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    } else {
+        $ipaddress = '알수없음';
+    }  
+    return $ipaddress;
+}
+?>
 <body>
     <header>
         <nav class="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 navbar navbar-light">
@@ -40,7 +61,7 @@
             <div class="card border-dark mb-3">
                 <div class="card-header">내 아이피</div>
                 <div class="card-body text-dark">
-                    <h5 class="card-title">test</h5>
+                    <h2 class="card-title"><?=getRealClientIp()?></h2>
 
 
                     <p></p>
