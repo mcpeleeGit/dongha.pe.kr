@@ -20,8 +20,8 @@ class Route {
 
     private static function isIpAdd(){
         $host = $_SERVER['HTTP_HOST'];
-        echo strpos($host, "ipadd.kr");
-        if(strpos($host, "ipadd.kr")) return true;
+        echo strpos($host, "ttt");
+        if(strpos($host, "ipadd.kr")>-1) return true;
         return false;
     }         
 
