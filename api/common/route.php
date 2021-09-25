@@ -19,6 +19,7 @@ class Route {
 
     private static function isIpAdd(){
         $host = $_SERVER['HTTP_HOST'];
+        echo $host;
         if(strpos($host, "ipadd.kr")) return true;
         return false;
     }         
