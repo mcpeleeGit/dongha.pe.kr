@@ -11,6 +11,7 @@
     <meta property="og:description" content="IP주소찾기 - 현재 IP를 확인하고 IP위치를 확인합니다.">
     <meta name="description" content="IP주소찾기 - 현재 IP를 확인하고 IP위치를 확인합니다.">
     <meta name="keywords" content="IP,주소찾기,IP주소찾기,IP위치,아이피,아이피주소">
+    <link rel="shortcut icon" href="/ipadd/img/icons8-ok-48.png">
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
         Kakao.init('7f505caea4941d8f531b21c220bc1cff');
