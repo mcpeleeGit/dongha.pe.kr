@@ -8,7 +8,7 @@ class Route {
             Route::routeIpadd();
         }        
         else{
-            Route::routeReact();
+            //Route::routeReact();
         }
     }
 
