@@ -178,7 +178,7 @@ function url_get_contents ($Url) {
     return $output;
 }
 
-$url= 'http://ipinfo.io';
+$url= 'https://ipinfo.io';
 $response = url_get_contents($url);
 $details = json_decode($response);
 $country = $details->country;
