@@ -35,12 +35,13 @@ require('ipadd/php/util.php');
     </script>  
 </head>
 <?php
-$url= 'https://ipinfo.io';
+$url= 'http://ip-api.com/json';
 $response = url_get_contents($url);
 $details = json_decode($response);
 $country = $details->country;
-$region = $details->region;
-$loc = $details->loc;
+$region = $details->regionName;
+$isp = $details->isp;
+$loc = $details->lat.",".$details->lon;
 
 ?>
 
@@ -60,7 +61,7 @@ $loc = $details->loc;
                     <h2 class="card-title"><?= getRealClientIp() ?></h2>
                     <p></p>
                     <h5 class="card-title"></h5>
-                    <?= $country ?> <?= $region ?>
+                    <?= $country ?> <?= $region ?> <?= $isp ?>
                     <p></p>
                     <h5 class="card-title"></h5>
                     <div class="map_wrap">
