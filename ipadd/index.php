@@ -1,3 +1,6 @@
+<?php
+require('ipadd/php/util.php');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,13 +15,15 @@
     <meta name="description" content="IP주소찾기 - 현재 IP를 확인하고 IP위치를 확인합니다.">
     <meta name="keywords" content="IP,주소찾기,IP주소찾기,IP위치,아이피,아이피주소">
     <link rel="shortcut icon" href="/ipadd/img/icons8-ok-48.png">
+    <!--kakao-->   
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f505caea4941d8f531b21c220bc1cff&libraries=services,clusterer,drawing"></script>
-    <script src="ipadd/kakaoMapsJavaScriptAPIwrapper.js"></script>
     <script>
         Kakao.init('7f505caea4941d8f531b21c220bc1cff');
     </script>
+    <!--map-->   
+    <link rel="stylesheet" href="ipadd/css/map.css">
+    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f505caea4941d8f531b21c220bc1cff&libraries=services,clusterer,drawing"></script>
+    <script src="ipadd/js/kakaoMapsJavaScriptAPIwrapper.js"></script>
     <!--bootstrapcdn-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -27,156 +32,9 @@
 
     <script type="text/javascript">
 
-    </script>
-
-<style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .map_wrap {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            height: 350px;
-        }
-
-        .radius_border {
-            visibility: hidden;
-            border: 0px solid #919191;
-            border-radius: 5px;
-        }
-
-        .custom_typecontrol {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            overflow: hidden;
-            width: 130px;
-            height: 30px;
-            margin: 0;
-            padding: 0;
-            z-index: 1;
-            font-size: 12px;
-            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
-        }
-
-        .custom_typecontrol span {
-            display: block;
-            width: 65px;
-            height: 30px;
-            float: left;
-            text-align: center;
-            line-height: 30px;
-            cursor: pointer;
-        }
-
-        .custom_typecontrol .unselected_btn {
-            background: #fff;
-            background: linear-gradient(#fff, #e6e6e6);
-        }
-
-        .custom_typecontrol .unselected_btn:hover {
-            background: #f5f5f5;
-            background: linear-gradient(#f5f5f5, #e3e3e3);
-        }
-
-        .custom_typecontrol .unselected_btn:active {
-            background: #e6e6e6;
-            background: linear-gradient(#e6e6e6, #fff);
-        }
-
-        .custom_typecontrol .selected_btn {
-            color: #fff;
-            background: #425470;
-            background: linear-gradient(#425470, #5b6d8a);
-        }
-
-        .custom_typecontrol .selected_btn:hover {
-            color: #fff;
-        }
-
-        .custom_zoomcontrol {
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            width: 36px;
-            height: 80px;
-            overflow: hidden;
-            z-index: 1;
-            background-color: #f5f5f5;
-        }
-
-        .custom_zoomcontrol span {
-            display: block;
-            width: 36px;
-            height: 40px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .custom_zoomcontrol span img {
-            width: 15px;
-            height: 15px;
-            padding: 0px 0;
-            border: none;
-        }
-
-        .custom_zoomcontrol span:first-child {
-            border-bottom: 1px solid #bfbfbf;
-        }
-    </style>    
+    </script>  
 </head>
 <?php
-function getRealClientIp()
-{
-
-    $ipaddress = '';
-    if ($_SERVER['HTTP_CLIENT_IP']) {
-        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } else if ($_SERVER['HTTP_X_FORWARDED']) {
-        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
-        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    } else if ($_SERVER['HTTP_FORWARDED']) {
-        $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    } else if ($_SERVER['REMOTE_ADDR']) {
-        $ipaddress = $_SERVER['REMOTE_ADDR'];
-    } else {
-        $ipaddress = '알수없음';
-    }
-    return $ipaddress;
-}
-
-function excuteCurl($callUrl)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $callUrl);
-    curl_setopt($ch, CURLOPT_POST, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    return $response;
-}
-
-function url_get_contents ($Url) {
-    if (!function_exists('curl_init')){ 
-        return file_get_contents($Url);
-    }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $Url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    return $output;
-}
-
 $url= 'https://ipinfo.io';
 $response = url_get_contents($url);
 $details = json_decode($response);
