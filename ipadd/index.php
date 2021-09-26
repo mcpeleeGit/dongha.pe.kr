@@ -14,8 +14,8 @@
     <link rel="shortcut icon" href="/ipadd/img/icons8-ok-48.png">
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f505caea4941d8f531b21c220bc1cff&libraries=services,clusterer,drawing"></script>
-    <script src="kakaoMapsJavaScriptAPIwrapper.js"></script>
+    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d68640b56d986af5c8a48505c7c8c71&libraries=services,clusterer,drawing"></script>
+    <script src="ipadd/kakaoMapsJavaScriptAPIwrapper.js"></script>
     <script>
         Kakao.init('7f505caea4941d8f531b21c220bc1cff');
     </script>
@@ -28,6 +28,108 @@
     <script type="text/javascript">
 
     </script>
+
+<style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .map_wrap {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 350px;
+        }
+
+        .radius_border {
+            visibility: hidden;
+            border: 0px solid #919191;
+            border-radius: 5px;
+        }
+
+        .custom_typecontrol {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            overflow: hidden;
+            width: 130px;
+            height: 30px;
+            margin: 0;
+            padding: 0;
+            z-index: 1;
+            font-size: 12px;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+        }
+
+        .custom_typecontrol span {
+            display: block;
+            width: 65px;
+            height: 30px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .custom_typecontrol .unselected_btn {
+            background: #fff;
+            background: linear-gradient(#fff, #e6e6e6);
+        }
+
+        .custom_typecontrol .unselected_btn:hover {
+            background: #f5f5f5;
+            background: linear-gradient(#f5f5f5, #e3e3e3);
+        }
+
+        .custom_typecontrol .unselected_btn:active {
+            background: #e6e6e6;
+            background: linear-gradient(#e6e6e6, #fff);
+        }
+
+        .custom_typecontrol .selected_btn {
+            color: #fff;
+            background: #425470;
+            background: linear-gradient(#425470, #5b6d8a);
+        }
+
+        .custom_typecontrol .selected_btn:hover {
+            color: #fff;
+        }
+
+        .custom_zoomcontrol {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 36px;
+            height: 80px;
+            overflow: hidden;
+            z-index: 1;
+            background-color: #f5f5f5;
+        }
+
+        .custom_zoomcontrol span {
+            display: block;
+            width: 36px;
+            height: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .custom_zoomcontrol span img {
+            width: 15px;
+            height: 15px;
+            padding: 0px 0;
+            border: none;
+        }
+
+        .custom_zoomcontrol span:first-child {
+            border-bottom: 1px solid #bfbfbf;
+        }
+    </style>    
 </head>
 <?php
 function getRealClientIp()
@@ -78,7 +180,12 @@ $loc = $details->loc;
                     <?= $country ?> <?= $region ?>
                     <p></p>
                     <h5 class="card-title"></h5>
-                    
+                    <div class="map_wrap">
+                        <div id="map" style="width:100%;height:350px;position:relative;overflow:hidden;"></div>
+                        <script>
+                            map = new Map(<?= $loc ?>, "map", 3);
+                        </script>                        
+                    </div>                    
                     <p></p>
                     
                 </div>
