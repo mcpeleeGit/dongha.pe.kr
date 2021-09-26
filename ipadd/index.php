@@ -154,6 +154,7 @@ function getRealClientIp()
     return $ipaddress;
 }
 
+ini_set('allow_url_fopen',1);
 $details = json_decode(file_get_contents("http://ipinfo.io/"));
 $country = $details->country;
 $region = $details->region;
