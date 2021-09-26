@@ -14,10 +14,10 @@
     <link rel="shortcut icon" href="/ipadd/img/icons8-ok-48.png">
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d68640b56d986af5c8a48505c7c8c71&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f505caea4941d8f531b21c220bc1cff&libraries=services,clusterer,drawing"></script>
     <script src="ipadd/kakaoMapsJavaScriptAPIwrapper.js"></script>
     <script>
-        Kakao.init('2d68640b56d986af5c8a48505c7c8c71');
+        Kakao.init('7f505caea4941d8f531b21c220bc1cff');
     </script>
     <!--bootstrapcdn-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -165,10 +165,9 @@ function excuteCurl($callUrl)
     return $response;
 }
 
-
 function url_get_contents ($Url) {
     if (!function_exists('curl_init')){ 
-        die('CURL is not installed!');
+        return file_get_contents($Url);
     }
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $Url);
