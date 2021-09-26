@@ -165,16 +165,21 @@ function excuteCurl($callUrl)
     return $response;
 }
 
-$url= 'https://ipinfo.io/';
 
-$arrContextOptions=array(
-      "ssl"=>array(
-            "verify_peer"=>false,
-            "verify_peer_name"=>false,
-        ),
-    );  
+function url_get_contents ($Url) {
+    if (!function_exists('curl_init')){ 
+        die('CURL is not installed!');
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $Url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return $output;
+}
 
-$response = file_get_contents($url, false, stream_context_create($arrContextOptions));
+$url= 'http://ipinfo.io';
+$response = url_get_contents($url);
 $details = json_decode($response);
 $country = $details->country;
 $region = $details->region;
