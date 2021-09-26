@@ -13,6 +13,9 @@
     <meta name="keywords" content="IP,주소찾기,IP주소찾기,IP위치,아이피,아이피주소">
     <link rel="shortcut icon" href="/ipadd/img/icons8-ok-48.png">
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f505caea4941d8f531b21c220bc1cff&libraries=services,clusterer,drawing"></script>
+    <script src="kakaoMapsJavaScriptAPIwrapper.js"></script>
     <script>
         Kakao.init('7f505caea4941d8f531b21c220bc1cff');
     </script>
@@ -27,27 +30,35 @@
     </script>
 </head>
 <?php
-function getRealClientIp() {
+function getRealClientIp()
+{
 
     $ipaddress = '';
     if ($_SERVER['HTTP_CLIENT_IP']) {
         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-    } else if($_SERVER['HTTP_X_FORWARDED_FOR']) {
+    } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    } else if($_SERVER['HTTP_X_FORWARDED']) {
+    } else if ($_SERVER['HTTP_X_FORWARDED']) {
         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-    } else if($_SERVER['HTTP_FORWARDED_FOR']) {
+    } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-    } else if($_SERVER['HTTP_FORWARDED']) {
+    } else if ($_SERVER['HTTP_FORWARDED']) {
         $ipaddress = $_SERVER['HTTP_FORWARDED'];
-    } else if($_SERVER['REMOTE_ADDR']) {
+    } else if ($_SERVER['REMOTE_ADDR']) {
         $ipaddress = $_SERVER['REMOTE_ADDR'];
     } else {
         $ipaddress = '알수없음';
-    }  
+    }
     return $ipaddress;
 }
+
+$details = json_decode(file_get_contents("http://ipinfo.io/"));
+$country = $details->country;
+$region = $details->region;
+$loc = $details->loc;
+
 ?>
+
 <body>
     <header>
         <nav class="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3 navbar navbar-light">
@@ -61,29 +72,18 @@ function getRealClientIp() {
             <div class="card border-dark mb-3">
                 <div class="card-header">내 아이피</div>
                 <div class="card-body text-dark">
-                    <h2 class="card-title"><?=getRealClientIp()?></h2>
-
-
+                    <h2 class="card-title"><?= getRealClientIp() ?></h2>
                     <p></p>
                     <h5 class="card-title"></h5>
-
+                    <?= $country ?> <?= $region ?>
                     <p></p>
                     <h5 class="card-title"></h5>
-
+                    
                     <p></p>
-                    <h5 class="card-title"></h5>
-
-
-                    <p></p>
+                    
                 </div>
             </div>
-            <div class="card border-dark mb-3">
-                <div class="card-body text-dark">
-                    <h5 class="card-title">test</h5>
 
-                    <p></p>
-                </div>
-            </div>
             <div class="card text-white bg-dark mb-3">
                 <div class="card-header">Link</div>
                 <div class="card-body">
