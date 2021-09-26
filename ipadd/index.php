@@ -17,7 +17,7 @@
     <script type="text/javascript"src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d68640b56d986af5c8a48505c7c8c71&libraries=services,clusterer,drawing"></script>
     <script src="ipadd/kakaoMapsJavaScriptAPIwrapper.js"></script>
     <script>
-        Kakao.init('7f505caea4941d8f531b21c220bc1cff');
+        Kakao.init('2d68640b56d986af5c8a48505c7c8c71');
     </script>
     <!--bootstrapcdn-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -154,8 +154,28 @@ function getRealClientIp()
     return $ipaddress;
 }
 
-ini_set('allow_url_fopen',1);
-$details = json_decode(file_get_contents("http://ipinfo.io/"));
+function excuteCurl($callUrl)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $callUrl);
+    curl_setopt($ch, CURLOPT_POST, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    return $response;
+}
+
+$url= 'https://ipinfo.io/';
+
+$arrContextOptions=array(
+      "ssl"=>array(
+            "verify_peer"=>false,
+            "verify_peer_name"=>false,
+        ),
+    );  
+
+$response = file_get_contents($url, false, stream_context_create($arrContextOptions));
+$details = json_decode($response);
 $country = $details->country;
 $region = $details->region;
 $loc = $details->loc;
